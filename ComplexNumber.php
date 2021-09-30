@@ -81,8 +81,8 @@ class ComplexNumber
             throw new DivisionByZeroError(self::DIVISION_BY_0_IS_NOT_PERMITTED);
         }
         $this->time($complexNumber, -1);
-//        $this->real /= $complexNumber->getReal() ** 2 + $complexNumber->getImaginary() ** 2;
-//        $this->imaginary /= $complexNumber->getReal() ** 2 + $complexNumber->getImaginary() ** 2;
+        $this->real /= $complexNumber->getReal() ** 2 + $complexNumber->getImaginary() ** 2;
+        $this->imaginary /= $complexNumber->getReal() ** 2 + $complexNumber->getImaginary() ** 2;
         return $this;
     }
 

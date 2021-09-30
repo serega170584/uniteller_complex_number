@@ -33,13 +33,13 @@ class ComplexNumberTest extends TestCase
     public function divideProvider(): array
     {
         return [
-            [3.5, 4.5, 1.5, 2.5, (3.5 * 1.5 + 4.5 * 2.5), (4.5 * 1.5 - 3.5 * 2.5)],
-            [1.5, 4.5, 3.5, 2.5, (3.5 * 1.5 + 4.5 * 2.5), (4.5 * 3.5 - 1.5 * 2.5)],
-            [3.5, 2.5, 1.5, 4.5, (3.5 * 1.5 + 4.5 * 2.5), (2.5 * 1.5 - 3.5 * 4.5)],
-            [1.5, 2.5, 3.5, 4.5, (3.5 * 1.5 + 4.5 * 2.5), (2.5 * 3.5 - 1.5 * 4.5)],
-            [2.5, 4.5, 1.5, 3.5, (2.5 * 1.5 + 4.5 * 3.5), (4.5 * 1.5 - 2.5 * 3.5)],
-            [3.5, 1.5, 4.5, 2.5, (3.5 * 4.5 + 1.5 * 2.5), (1.5 * 4.5 - 3.5 * 2.5)],
-            [2.5, 1.5, 4.5, 3.5, (2.5 * 4.5 + 1.5 * 3.5), (1.5 * 4.5 - 2.5 * 3.5)],
+            [3.5, 4.5, 1.5, 2.5, (3.5 * 1.5 + 4.5 * 2.5) / (1.5 ** 2 + 2.5 ** 2), (4.5 * 1.5 - 3.5 * 2.5) / (1.5 ** 2 + 2.5 ** 2)],
+            [1.5, 4.5, 3.5, 2.5, (3.5 * 1.5 + 4.5 * 2.5) / (3.5 ** 2 + 2.5 ** 2), (4.5 * 3.5 - 1.5 * 2.5) / (3.5 ** 2 + 2.5 ** 2)],
+            [3.5, 2.5, 1.5, 4.5, (3.5 * 1.5 + 4.5 * 2.5) / (1.5 ** 2 + 4.5 ** 2), (2.5 * 1.5 - 3.5 * 4.5) / (1.5 ** 2 + 4.5 ** 2)],
+            [1.5, 2.5, 3.5, 4.5, (3.5 * 1.5 + 4.5 * 2.5) / (3.5 ** 2 + 4.5 ** 2), (2.5 * 3.5 - 1.5 * 4.5) / (3.5 ** 2 + 4.5 ** 2)],
+            [2.5, 4.5, 1.5, 3.5, (2.5 * 1.5 + 4.5 * 3.5) / (1.5 ** 2 + 3.5 ** 2), (4.5 * 1.5 - 2.5 * 3.5) / (1.5 ** 2 + 3.5 ** 2)],
+            [3.5, 1.5, 4.5, 2.5, (3.5 * 4.5 + 1.5 * 2.5) / (4.5 ** 2 + 2.5 ** 2), (1.5 * 4.5 - 3.5 * 2.5) / (4.5 ** 2 + 2.5 ** 2)],
+            [2.5, 1.5, 4.5, 3.5, (2.5 * 4.5 + 1.5 * 3.5) / (4.5 ** 2 + 3.5 ** 2), (1.5 * 4.5 - 2.5 * 3.5) / (4.5 ** 2 + 3.5 ** 2)],
         ];
     }
 
@@ -71,50 +71,64 @@ class ComplexNumberTest extends TestCase
     }
 
     /**
-     * @param $firstReal
-     * @param $firstImaginary
-     * @param $secondReal
-     * @param $secondImaginary
+     * @param $real
+     * @param $imaginary
+     * @param $multiplyReal
+     * @param $multiplyImaginary
      * @param $resultReal
      * @param $resultImaginary
      * @dataProvider multiplyProvider
      */
-//    public function testMultiply(
-//        $firstReal,
-//        $firstImaginary,
-//        $secondReal,
-//        $secondImaginary,
-//        $resultReal,
-//        $resultImaginary
-//    ): void
-//    {
-//        $this->assertEquals($a, $b);
-//    }
-//
-//    public function multiplyProvider(): array
-//    {
-//        return [
-//            [1, 1]
-//        ];
-//    }
-//
-//    /**
-//     * @param $a
-//     * @param $b
-//     * @dataProvider addProvider
-//     */
-//    public function testAdd(
-//        $firstReal,
-//        $firstImaginary,
-//        $secondReal,
-//        $secondImaginary,
-//        $resultReal,
-//        $resultImaginary
-//    )
-//    {
-//        $this->assertEquals($a, $b);
-//    }
-//
+    public function testMultiply(
+        $real,
+        $imaginary,
+        $multiplyReal,
+        $multiplyImaginary,
+        $resultReal,
+        $resultImaginary
+    ): void
+    {
+        $complexNumber = new ComplexNumber($real, $imaginary);
+        $multiplyComplexNumber = new ComplexNumber($multiplyReal, $multiplyImaginary);
+        $complexNumber->multiply($multiplyComplexNumber);
+        $this->assertEquals($resultReal, $complexNumber->getReal());
+        $this->assertEquals($resultImaginary, $complexNumber->getImaginary());
+    }
+
+    public function multiplyProvider(): array
+    {
+        return [
+            [3.5, 4.5, 1.5, 2.5, (3.5 * 1.5 - 4.5 * 2.5), (4.5 * 1.5 + 3.5 * 2.5)],
+            [1.5, 4.5, 3.5, 2.5, (3.5 * 1.5 - 4.5 * 2.5), (4.5 * 3.5 + 1.5 * 2.5)],
+            [3.5, 2.5, 1.5, 4.5, (3.5 * 1.5 - 4.5 * 2.5), (2.5 * 1.5 + 3.5 * 4.5)],
+            [1.5, 2.5, 3.5, 4.5, (3.5 * 1.5 - 4.5 * 2.5), (2.5 * 3.5 + 1.5 * 4.5)],
+            [2.5, 4.5, 1.5, 3.5, (2.5 * 1.5 - 4.5 * 3.5), (4.5 * 1.5 + 2.5 * 3.5)],
+            [3.5, 1.5, 4.5, 2.5, (3.5 * 4.5 - 1.5 * 2.5), (1.5 * 4.5 + 3.5 * 2.5)],
+            [2.5, 1.5, 4.5, 3.5, (2.5 * 4.5 - 1.5 * 3.5), (1.5 * 4.5 + 2.5 * 3.5)],
+        ];
+    }
+
+    /**
+     * @param $a
+     * @param $b
+     * @dataProvider addProvider
+     */
+    public function testAdd(
+        $real,
+        $imaginary,
+        $multiplyReal,
+        $multiplyImaginary,
+        $resultReal,
+        $resultImaginary
+    )
+    {
+        $complexNumber = new ComplexNumber($real, $imaginary);
+        $multiplyComplexNumber = new ComplexNumber($multiplyReal, $multiplyImaginary);
+        $complexNumber->multiply($multiplyComplexNumber);
+        $this->assertEquals($resultReal, $complexNumber->getReal());
+        $this->assertEquals($resultImaginary, $complexNumber->getImaginary());
+    }
+
 //    public function addProvider(): array
 //    {
 //        return [
