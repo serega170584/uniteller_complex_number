@@ -109,58 +109,78 @@ class ComplexNumberTest extends TestCase
     }
 
     /**
-     * @param $a
-     * @param $b
+     * @param $real
+     * @param $imaginary
+     * @param $addReal
+     * @param $addImaginary
+     * @param $resultReal
+     * @param $resultImaginary
      * @dataProvider addProvider
      */
     public function testAdd(
         $real,
         $imaginary,
-        $multiplyReal,
-        $multiplyImaginary,
+        $addReal,
+        $addImaginary,
         $resultReal,
         $resultImaginary
     )
     {
         $complexNumber = new ComplexNumber($real, $imaginary);
-        $multiplyComplexNumber = new ComplexNumber($multiplyReal, $multiplyImaginary);
-        $complexNumber->multiply($multiplyComplexNumber);
+        $addComplexNumber = new ComplexNumber($addReal, $addImaginary);
+        $complexNumber->add($addComplexNumber);
         $this->assertEquals($resultReal, $complexNumber->getReal());
         $this->assertEquals($resultImaginary, $complexNumber->getImaginary());
     }
 
-//    public function addProvider(): array
-//    {
-//        return [
-//            [1, 1]
-//        ];
-//    }
-//
-//    /**
-//     * @param $firstReal
-//     * @param $firstImaginary
-//     * @param $secondReal
-//     * @param $secondImaginary
-//     * @param $resultReal
-//     * @param $resultImaginary
-//     * @dataProvider addProvider
-//     */
-//    public function testSubtract(
-//        $firstReal,
-//        $firstImaginary,
-//        $secondReal,
-//        $secondImaginary,
-//        $resultReal,
-//        $resultImaginary
-//    ): void
-//    {
-//        $this->assertEquals($a, $b);
-//    }
-//
-//    public function subtractProvider(): array
-//    {
-//        return [
-//            [1, 1]
-//        ];
-//    }
+    public function addProvider(): array
+    {
+        return [
+            [3.5, 4.5, 1.5, 2.5, 3.5 + 1.5, 4.5 + 2.5],
+            [1.5, 4.5, 3.5, 2.5, 3.5 + 1.5, 4.5 + 2.5],
+            [3.5, 2.5, 1.5, 4.5, 3.5 + 1.5, 4.5 + 2.5],
+            [1.5, 2.5, 3.5, 4.5, 3.5 + 1.5, 4.5 + 2.5],
+            [2.5, 4.5, 1.5, 3.5, 2.5 + 1.5, 4.5 + 3.5],
+            [3.5, 1.5, 4.5, 2.5, 3.5 + 4.5, 1.5 + 2.5],
+            [2.5, 1.5, 4.5, 3.5, 2.5 + 4.5, 1.5 + 3.5],
+        ];
+    }
+
+    /**
+     * @param $real
+     * @param $imaginary
+     * @param $subtractReal
+     * @param $subtractImaginary
+     * @param $resultReal
+     * @param $resultImaginary
+     * @dataProvider subtractProvider
+     */
+    public function testSubtract(
+        $real,
+        $imaginary,
+        $subtractReal,
+        $subtractImaginary,
+        $resultReal,
+        $resultImaginary
+    ): void
+    {
+        $complexNumber = new ComplexNumber($real, $imaginary);
+        $subtractComplexNumber = new ComplexNumber($subtractReal, $subtractImaginary);
+        $complexNumber->subtract($subtractComplexNumber);
+        $this->assertEquals($resultReal, $complexNumber->getReal());
+        $this->assertEquals($resultImaginary, $complexNumber->getImaginary());
+    }
+
+    public function subtractProvider(): array
+    {
+        return [
+            [3.5, 4.5, 1.5, 2.5, 3.5 - 1.5, 4.5 - 2.5],
+            [1.5, 4.5, 3.5, 2.5, 1.5 - 3.5, 4.5 - 2.5],
+            [3.5, 2.5, 1.5, 4.5, 3.5 - 1.5, 2.5 - 4.5],
+            [1.5, 2.5, 3.5, 4.5, 1.5 - 3.5, 2.5 - 4.5],
+            [2.5, 4.5, 1.5, 3.5, 2.5 - 1.5, 4.5 - 3.5],
+            [3.5, 1.5, 4.5, 2.5, 3.5 - 4.5, 1.5 - 2.5],
+            [2.5, 1.5, 4.5, 3.5, 2.5 - 4.5, 1.5 - 3.5],
+        ];
+    }
 }
